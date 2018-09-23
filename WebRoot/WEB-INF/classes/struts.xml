@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 在这里设置字符编码 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<!-- 要注意Struts2默认文件上传最大为2M即便你设置了<param name="maximumSize">5242880</param> 
+		当上传的文件大于2M时候也会出错的这时要设置，另外一个常量 <constant name="struts.multipart.maxSize" value="1000000000"/> -->
+
+
+	<package name="default" extends="struts-default">
+		<!-- 定义一个拦截器 <interceptors> <interceptor name="UserInterceptor" class="com.liang.intercepter.UserInterceptor"> 
+			</interceptor> 拦截器栈 <interceptor-stack name="mydefault"> <interceptor-ref 
+			name="defaultStack" /> <interceptor-ref name="UserInterceptor" /> </interceptor-stack> 
+			</interceptors> 定义全局Result <global-results> 当返回login视图名时，转入/login.jsp页面 <result 
+			name="login">/login.jsp</result> </global-results> -->
+
+		<action name="IndexInit" class="com.liang.action.IndexInitAction">
+			<!-- 结果集，即action中SUCCESS返回的视图 -->
+			<result name="success">/notices.jsp</result>
+		</action>
+		<action name="searchNotices*" class="com.liang.action.NoticesAction"
+			method="{1}">
+			<result name="success" type="redirect">/index.jsp</result>
+			<result name="noticesdetail" type="redirect">/notices/detail.jsp</result>
+		</action>
+
+		<action name="user_*" class="com.liang.action.UserAction"
+			method="{1}">
+			<result name="user_registerSuccess">common/register.jsp
+			</result>
+
+			<result name="user_loginSuccess">student/studentIndex.jsp
+			</result>
+			<result name="admin_loginSuccess">manager/managerIndex.jsp
+			</result>
+			<result name="registerError">common/register.jsp</result>
+			<result name="loginError">index.jsp</result>
+			<result name="logoutSuccess" type="redirect">index.jsp</result>
+		</action>
+
+		<action name="image" class="com.liang.action.ImageAction">
+		</action>
+
+		<action name="forgetPassword" class="com.liang.action.forgetPassword">
+			<result name="sendSMSCodeSuccess">/common/forgetPassword.jsp</result>
+			<result name="sendSMSCodeError">/common/forgetPassword.jsp</result>
+			<result name="submitError">/common/forgetPassword.jsp</result>
+			<result name="submitSuccess">/common/resetPassword.jsp</result>
+			<result name="resetPwError">/common/resetPassword.jsp</result>
+			<result name="resetPwSuccess">/common/resetPassword.jsp</result>
+			<result name="error">index.jsp</result>
+		</action>
+
+		<action name="download" class="com.liang.action.DownloadAction"
+			method="put">
+			<result name="downloadSuccess">student/other.jsp</result>
+			<result name="downloadError">student/other.jsp</result>
+		</action>
+
+		<action name="upload_*" class="com.liang.action.Upload" method="{1}">
+
+			<result name="UserSignInfoSuccess">/student/studentIndex.jsp</result>
+			<result name="UserSignInfoError">/student/studentIndex.jsp</result>
+
+			<!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性 "fileUpload.maximumSize" ：限制上传最大的文件大小。 
+				"fileUpload.allowedTypes"：允许上传文件的类型。 "fileUpload.allowedExtensions"：允许上传文件的可扩展文件类型。 -->
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">500000000</param>
+			</interceptor-ref>
+			<!-- 自定义了拦截器后必手动定义默认的拦截器，否则默认的拦截器不会被执行 -->
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="Subject_*" class="com.liang.action.SelectSubjectAction"
+			method="{1}">
+			<result name="selectsuccess">/student/pay.jsp</result>
+			<result name="selecterror">/student/selectSubjects.jsp</result>
+			<result name="showsuccess">/student/pay.jsp</result>
+			<result name="deletesuccess">/student/pay.jsp</result>
+			<result name="deleteerror">/student/pay.jsp</result>
+		</action>
+		<action name="personInfo" class="com.liang.action.PersonInfo"
+			method="show">
+			<result name="success">student/personInfo.jsp</result>
+			<result name="error">student/personInfo.jsp</result>
+		</action>
+  		<action name="pay_success" class="com.liang.action.PayAction" method="pay">
+			<result name="success">/student/pay.jsp</result>
+			<result name="error">/student/psy.jsp</result>
+		</action>
+	</package>
+	<package name="json" extends="json-default">
+		<action name="showSigns" class="com.liang.action.SelectSubjectAction"
+			method="show2">
+			<result name="show2success" type="json">
+				<param name="root"> signList </param>
+			</result>
+		</action>
+	</package>
+</struts> 
+

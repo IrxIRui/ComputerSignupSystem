@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+
+a {
+	text-decoration: none;
+	color: #A7C5FF
+}
+
+li {
+	list-style-type: none;
+}
+
+li:hover {
+	background-color: #EEEEEE;
+}
+
+.indexhead {
+	width: 100%;
+	min-heigth: 2000px;
+	background: #214895;
+	overflow: hidden
+}
+
+.translation {
+	margin-top: 10px;
+}
+
+.indexcontext {
+	display: inline;
+}
+
+.notices {
+	width:100%;	
+	padding-top:20px;
+	float: left;
+}
+
+.login_print_search {
+	width:100%;
+	padding-top:20px;
+	float: right;
+}
+.indexbottom{
+	width: 100%;
+	min-heigth: 2000px;
+	overflow: hidden;
+}
+/* notices.jsp */
+.searchcolumn{display:inline; }
+/* /notices.jsp */
